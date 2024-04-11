@@ -1,0 +1,25 @@
+
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
+
+# IPython
+profile_default/
+ipython_config.py
+
+
+### Python ###
+__pycache__/
+
+
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+
+## Large files
+glove.6B/glove.6B.300d.txt 
+GoogleNews-vectors-negative300.bin.gz
