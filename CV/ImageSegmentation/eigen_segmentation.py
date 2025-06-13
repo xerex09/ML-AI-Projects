@@ -75,7 +75,7 @@ def compute_affinity_matrix(image: np.ndarray, n_segments=100, compactness=10):
                 similarity = np.exp(-color_weight * color_dist) * \
                              np.exp(-position_weight * spatial_dist)
                 
-                if similarity > 0.01:  # Threshold to keep matrix sparse
+                if similarity > 0.5:  # Threshold to keep matrix sparse
                     row_indices.append(i)
                     col_indices.append(j)
                     values.append(similarity)
@@ -105,7 +105,7 @@ def eigen_segmentation(image: np.ndarray, num_segments: int = 5):
     image_float = preprocess_image(image)
     
     # Create affinity matrix from superpixels
-    W, superpixels = compute_affinity_matrix(image_float, n_segments=200, compactness=20)
+    W, superpixels = compute_affinity_matrix(image_float, n_segments=1000, compactness=50)
     normalized_W, d_sqrt_inv = compute_laplacian(W)
     
     # Compute eigendecomposition
@@ -151,14 +151,14 @@ def detect_segment_boundaries(segmented_image):
     return outline
 
 def main():
-    image_path = 'data/saugat.jpeg'
+    image_path = 'data/beamerexample-lecture-pic3.jpg'
     image = cv2.imread(image_path)
     if image is None:
         print(f"Cannot load image: {image_path}")
         return
 
     print(f"Processing image: {image_path}, shape: {image.shape}")
-    segmented_image, outline_image, boundaries_image = eigen_segmentation(image, num_segments=5)
+    segmented_image, outline_image, boundaries_image = eigen_segmentation(image, num_segments=100)
     
     # Display results
     plt.figure(figsize=(15, 5))
